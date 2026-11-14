@@ -1,15 +1,18 @@
-# Sample deployment. The adapter path is the Pulse-Eight CEC adapter as seen on
-# htpc (/dev/serial/by-id/usb-Pulse-Eight_CEC_Adapter_v8-if00 -> /dev/ttyACM0).
+# Sample deployment using the published image (ghcr.io/bakatrouble/cec-client-rs).
+#
+# The CEC adapter is passed through by its stable /dev/serial/by-id path. Check
+# the name on your host with: ls -l /dev/serial/by-id/
+# (Pulse-Eight adapter: usb-Pulse-Eight_CEC_Adapter_v8-if00 -> ../../ttyACM0)
+#
 # /dev/uinput needs the uinput kernel module loaded on the host (modprobe uinput).
 # The container runs as root without extra capabilities: both device nodes are
 # root-owned, and root owns them.
 services:
   cec-rs:
-    build: .
-    image: cec-rs:latest
+    image: ghcr.io/bakatrouble/cec-client-rs:debian-20261114
     restart: unless-stopped
     devices:
-      - /dev/ttyACM0:/dev/ttyACM0
+      - /dev/serial/by-id/usb-Pulse-Eight_CEC_Adapter_v8-if00:/dev/ttyACM0
       - /dev/uinput:/dev/uinput
     cap_drop:
       - ALL
