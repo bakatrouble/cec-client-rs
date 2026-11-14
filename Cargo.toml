@@ -1,0 +1,11 @@
+[package]
+name = "cec-rs"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.104"
+libcec = "8.1.7"
+mouse-keyboard-input = "0.9.1"
+tracing = "0.1.44"
+tracing-subscriber = "0.3.23"
